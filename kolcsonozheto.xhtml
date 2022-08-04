@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Kölcsönözhető könyvek</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:commandLink value="Vissza" action="index" /><br/>
+            <h:outputText value="Kölcsönző tag: "/>
+            <h:selectOneMenu value="#{konyvtar.kivalasztottTagId}" >
+                <f:selectItem itemLabel="Válassz a tagok közül" itemValue="#{null}" />
+                <f:selectItems value="#{konyvtar.tagok}" var="tag" itemLabel="#{tag.nev}" itemValue="#{tag.id}"/>
+            </h:selectOneMenu>
+            <h:commandButton value="Kiválaszt" action="#{konyvtar.kivalaszt()}" /> <br/>
+            Kiválasztott tag ID: <h:outputText value="#{konyvtar.kivalasztottTagId}" rendered="#{konyvtar.kivalasztottTagId!=0}"/> <br/>
+            <h:dataTable value="#{konyvtar.kolcsonozhetoList}" var="konyv" >
+                <h:column>
+                    <f:facet name="header">
+                        Szerző
+                    </f:facet>
+                    #{konyv.szerzo}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Cím
+                    </f:facet>
+                    #{konyv.cim}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Oldalszám
+                    </f:facet>
+                    #{konyv.oldalszam}
+                </h:column>
+                 <h:column>
+                    <f:facet name="header">
+                        Kölcsönzés
+                    </f:facet>
+                     <h:commandButton value="Kölcsönöz" action="#{konyvtar.kolcsonoz(konyv)}" /><br/>
+                </h:column>
+            </h:dataTable>           
+        </h:form>
+    </h:body>
+</html>

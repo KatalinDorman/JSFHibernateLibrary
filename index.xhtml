@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:panelGrid columns="2" styleClass="align-center">
+                <h:panelGroup>
+                    <h:commandButton value="Új tag felvétele" action="#{konyvtar.ujTag()}"/>
+                    <h:commandButton value="Tagok szerkesztése"/><br/>
+                    Név: <h:inputText value="#{konyvtar.nevKeres}"/> <h:commandButton value="Keres" action="#{konyvtar.keres()}"/>
+                    <h:commandLink value="Kölcsönözhető könyvek" action="kolcsonozheto"/><br/>
+                    <h:dataTable value="#{konyvtar.tagok}" var="tag">
+                        <h:column>
+                            <f:facet name="header">
+                                Név
+                            </f:facet>
+                            #{tag.nev}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Email
+                            </f:facet>
+                            #{tag.email}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Könyvek listázása
+                            </f:facet>
+                            <h:commandButton value="Listáz" action="#{konyvtar.konyvListaz(tag)}" rendered="#{tag.konyvs.size()>0}" /><br/>
+                        </h:column>        
+                    </h:dataTable>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:dataTable value="#{konyvtar.konyvek}" var="konyv" rendered="#{konyvtar.kivalasztottTag!=null}">
+                        <h:column>
+                            <f:facet name="header">
+                                Szerző
+                            </f:facet>
+                            #{konyv.szerzo}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Cím
+                            </f:facet>
+                            #{konyv.cim}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                Művelet
+                            </f:facet>
+                            <h:commandButton value="Visszavét" action="#{konyvtar.visszavesz(konyv)}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:form>    
+    </h:body>
+</html>
+
